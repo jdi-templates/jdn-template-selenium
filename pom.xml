@@ -14,37 +14,13 @@
         <aspectj.version>1.9.7</aspectj.version>
         <domain>https://jdi-testing.github.io/jdi-light/</domain>
         <testng.version>7.8.0</testng.version>
-<!--        <allure.testng>2.23.0</allure.testng>-->
-<!--        <allure.maven>2.12.0</allure.maven>-->
+        <allure.testng>2.23.0</allure.testng>
+        <allure.maven>2.12.0</allure.maven>
         <jetty.version>9.4.12.RC2</jetty.version>
         <driver.remote.url />
         <log.level>INFO</log.level>
         <!-- for JDK 16+ use profile jdk16 -->
     </properties>
-
-    <profiles>
-        <profile>
-            <id>jdk16</id>
-            <activation>
-                <jdk>[16, 20]</jdk>
-            </activation>
-            <properties>
-                <aspectj.args>--add-opens java.base/java.lang=ALL-UNNAMED</aspectj.args>
-            </properties>
-        </profile>
-
-        <profile>
-            <id>ci</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <properties>
-                <driver.remote.url>http://localhost:4444/wd/hub</driver.remote.url>
-                <log.level>INFO</log.level>
-            </properties>
-        </profile>
-    </profiles>
-
     <dependencies>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -69,22 +45,22 @@
             <version>5.6.3</version>
         </dependency>
         <!--Allure-->
-<!--        <dependency>-->
-<!--            <groupId>io.qameta.allure</groupId>-->
-<!--            <artifactId>allure-testng</artifactId>-->
-<!--            <version>${allure.testng}</version>-->
-<!--            <scope>test</scope>-->
-<!--            <exclusions>-->
-<!--                <exclusion>-->
-<!--                    <groupId>org.testng</groupId>-->
-<!--                    <artifactId>testng</artifactId>-->
-<!--                </exclusion>-->
-<!--                <exclusion>-->
-<!--                    <groupId>io.qameta.allure</groupId>-->
-<!--                    <artifactId>allure-java-commons</artifactId>-->
-<!--                </exclusion>-->
-<!--            </exclusions>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>${allure.testng}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.testng</groupId>
+                    <artifactId>testng</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.qameta.allure</groupId>
+                    <artifactId>allure-java-commons</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
@@ -132,35 +108,21 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.2</version>
                 <configuration>
-<!--                    <systemPropertyVariables>-->
-<!--                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>-->
-<!--                    </systemPropertyVariables>-->
+                    <systemPropertyVariables>
+                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+                    </systemPropertyVariables>
+                    <properties>
+                        <property>
+                            <name>listener</name>
+                            <value>io.qameta.allure.testng.AllureTestNg</value>
+                        </property>
+                    </properties>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/general.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
-                    <argLine>
-                        ${aspectj.args}
-                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-                    </argLine>
                 </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.aspectj</groupId>
-                        <artifactId>aspectjweaver</artifactId>
-                        <version>${aspectj.version}</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-            <plugin>
-<!--                <groupId>io.qameta.allure</groupId>-->
-<!--                <artifactId>allure-maven</artifactId>-->
-<!--                <version>${allure.maven}</version>-->
-<!--                <configuration>-->
-<!--                    <reportVersion>2.10.0</reportVersion>-->
-<!--                </configuration>-->
             </plugin>
         </plugins>
-
         <resources>
             <resource>
                 <directory>${project.basedir}/src/main/resources</directory>
