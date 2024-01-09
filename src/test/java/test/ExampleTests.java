@@ -13,8 +13,7 @@ public class ExampleTests extends BaseTest {
         homePage = new HomePage(driver);
     }
 
-    @Test
-    @Description("Test case description for Google Chrome")
+    @Test(description = "Example test")
     public void testMethod() {
         homePage.open();
         homePage.link.click();
