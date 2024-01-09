@@ -1,23 +1,26 @@
 package utilities;
 
-import org.apache.commons.configuration2.Configuration;
-import org.apache.commons.configuration2.builder.fluent.Configurations;
-import org.apache.commons.configuration2.ex.ConfigurationException;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 public class ConfigReader {
 
-    Configurations configs = new Configurations();
-    Configuration config;
-
-    public ConfigReader() {
-        try {
-            config = configs.properties("src/test/resources/config.properties");
-        } catch (ConfigurationException cex) {
-            // Something went wrong
-        }
+    public static String getConfigProperty(String propertyName) {
+        return getPropertyValue("config.properties", propertyName);
     }
 
-    public String getBaseUrl() {
-        return config.getString("baseUrl");
+    private static String getPropertyValue(String propertyFileName, String propertyName) {
+        String propertyValue = null;
+
+        try (InputStream input = new FileInputStream("./src/test/resources/" + propertyFileName)) {
+            Properties prop = new Properties();
+            prop.load(input);
+            propertyValue = prop.getProperty(propertyName);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return propertyValue;
     }
 }
