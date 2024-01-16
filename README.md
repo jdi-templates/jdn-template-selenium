@@ -13,7 +13,7 @@ Empty template for Test Automation project with Selenium
 
 4. Parameters that can be changed:
 
-- File src/test/resources/config.properties There are settings to define base url of your site under tests, browser to
+- File config/AppConfig.java contains settings to define base url of your site under test, browser to
   define chrome/safari/ie/firefox/edge which driver to use
 
 5. TestNg Retry and before after listeners: You can also modify rules of retry tests (now it is 1 retry for each test)

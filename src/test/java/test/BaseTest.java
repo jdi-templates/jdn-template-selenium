@@ -3,11 +3,9 @@ package test;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
+import config.AppConfig;
 import utilities.DriverFactory;
-
-import static utilities.ConfigReader.getConfigProperty;
 
 @Listeners()
 public abstract class BaseTest {
@@ -17,8 +15,8 @@ public abstract class BaseTest {
 
     @BeforeMethod
     public void setUp() {
-        baseUrl = getConfigProperty("baseUrl");
-        driver = DriverFactory.getDriver(getConfigProperty("browser"));
+        baseUrl = AppConfig.BASE_URL;
+        driver = DriverFactory.getDriver(AppConfig.BROWSER);
         driver.manage()
                 .window()
                 .maximize();

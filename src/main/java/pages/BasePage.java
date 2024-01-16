@@ -7,8 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import static utilities.ConfigReader.getConfigProperty;
+import config.AppConfig;
 
 public abstract class BasePage {
 
@@ -19,7 +18,7 @@ public abstract class BasePage {
 
     public BasePage(WebDriver driver, String path) {
         this.driver = driver;
-        this.baseUrl = getConfigProperty("baseUrl");
+        this.baseUrl = AppConfig.BASE_URL;
         this.path = path;
         PageFactory.initElements(driver, this);
     }
