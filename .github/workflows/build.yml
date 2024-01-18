@@ -37,46 +37,11 @@ jobs:
         id: build
         run: mvn clean install -DskipTests -ntp
 
-      - name: Start Selenoid
-        uses: Xotabu4/selenoid-github-action@v2
-        id: start-selenoid
-
-      - name: Check Selenoid has been started
-        run: curl http://localhost:4444/status
-
       - name: Tests
         id: functests
         timeout-minutes: 10
         continue-on-error: true
         run: mvn test -ntp
-
-      - name: Get Allure history
-        uses: actions/checkout@v3
-        id: allure-setup
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
-
-      - name: Generate Allure report
-        uses: simple-elf/allure-report-action@master
-        with:
-          allure_results: target/allure-results
-          allure_report: target/allure-report
-          allure_history: allure-history
-
-      - name: Upload Allure report
-        uses: actions/upload-artifact@master
-        with:
-          name: Allure report
-          path: target/allure-report
-
-      - name: Deploy Allure report to Github Pages
-        uses: peaceiris/actions-gh-pages@v2
-        env:
-          PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: allure-history
 
       - name: Check tests are passed
         if: ${{ steps.functests.outcome != 'success' }}
