@@ -1,5 +1,6 @@
 package utilities;
 
+import configuration.Configuration;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -25,7 +26,8 @@ public class DriverFactory {
         }
         switch (browserName.toLowerCase()) {
             case CHROME:
-                boolean headlessMode = Boolean.parseBoolean(System.getProperty("headless", "true"));
+                boolean headlessMode = Configuration.getInstance()
+                        .isHeadless();
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--no-sandbox");
                 chromeOptions.addArguments("--window-size=1920x1080");

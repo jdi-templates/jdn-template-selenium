@@ -2,6 +2,7 @@ package pages;
 
 import java.util.List;
 
+import configuration.Configuration;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -18,6 +19,8 @@ public abstract class BasePage {
     public BasePage(WebDriver driver, String path) {
         this.driver = driver;
         this.path = path;
+        baseUrl = Configuration.getInstance()
+                .getBaseUrl();
         PageFactory.initElements(driver, this);
     }
 
