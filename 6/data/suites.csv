@@ -1,0 +1,3 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"skipped","Thu Jan 18 10:43:58 GMT 2024","Thu Jan 18 10:43:58 GMT 2024","1","Site test","Tests","test.ExampleTests","test.ExampleTests","testMethod","Example test",""
+"broken","Thu Jan 18 10:43:58 GMT 2024","Thu Jan 18 10:43:58 GMT 2024","1","Site test","Tests","test.ExampleTests","test.ExampleTests","setUp","setUp",""
