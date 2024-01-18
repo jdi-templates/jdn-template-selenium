@@ -24,7 +24,6 @@
         <base.url>https://example.com</base.url>
         <headless>true</headless>
         <browser>chrome</browser>
-        <headless>true</headless>
     </properties>
 
     <dependencies>
