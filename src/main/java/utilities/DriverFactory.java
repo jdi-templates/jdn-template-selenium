@@ -6,7 +6,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
@@ -26,6 +25,7 @@ public class DriverFactory {
         }
         switch (browserName.toLowerCase()) {
             case CHROME:
+                boolean headlessMode = Boolean.parseBoolean(System.getProperty("headless", "true"));
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--no-sandbox");
                 chromeOptions.addArguments("--window-size=1920x1080");
@@ -33,6 +33,9 @@ public class DriverFactory {
                 chromeOptions.addArguments("--disable-extensions");
                 chromeOptions.addArguments("--disable-gpu");
                 chromeOptions.addArguments("--disable-dev-shm-usage");
+                if (headlessMode) {
+                    chromeOptions.addArguments("--headless");
+                }
                 WebDriverManager.chromedriver()
                         .setup();
                 return new ChromeDriver(chromeOptions);

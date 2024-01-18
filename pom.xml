@@ -20,6 +20,10 @@
         <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <headless>true</headless>
+        <base.url>https://example.com</base.url>
+        <browser>chrome</browser>
+        <headless>true</headless>
     </properties>
 
     <dependencies>
