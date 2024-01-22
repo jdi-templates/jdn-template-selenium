@@ -1,0 +1,50 @@
+name: Run tests
+env:
+  ALLURE_VERSION: "2.10.0"
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+  release:
+    types:
+      - created
+
+jobs:
+  build:
+    name: Tests on JDK
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        java: [ 11, 17 ]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK ${{ matrix.java }}
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java }}
+          java-package: jdk
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Build with Maven
+        id: build
+        run: mvn clean install -DskipTests -ntp
+
+      - name: Tests
+        id: functests
+        timeout-minutes: 10
+        continue-on-error: true
+        run: mvn test -ntp
+
+      - name: Check tests are passed
+        if: ${{ steps.functests.outcome != 'success' }}
+        run: |
+          echo Tests result: ${{ steps.functests.outcome }}
+          exit 1
